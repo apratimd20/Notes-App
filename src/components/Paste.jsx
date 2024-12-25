@@ -1,9 +1,15 @@
+
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromPaste } from "../redux/PasteSlice";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-// import Visiblity from '@mui/icons-material/Visibil'
+import { Visibility } from "@mui/icons-material";
+import CreateIcon from "@mui/icons-material/Create"
+import Copy from "@mui/icons-material/ContentCopy"
+import Share from "@mui/icons-material/Share"
+import Delete from "@mui/icons-material/Delete"
+
 
 
 const Paste = () => {
@@ -18,6 +24,12 @@ const Paste = () => {
   const filterData = pastes.filter((paste) =>
     paste?.title?.toLowerCase().includes(search.toLowerCase())
   );
+  function handleShare(){
+      navigator.share({
+        title:"See this notes",
+        url:'pastes/pasteId'
+      })
+  }
 
   return (
     <div className="w-[44%] h-[80%]  rounded flex flex-col ml-[25%] mt-4">
@@ -47,17 +59,15 @@ const Paste = () => {
                       ? new Date(paste.createdAt).toLocaleDateString()
                       : "No Date"}
                   </div>
-                  <div className="flex justify-around text-sm">
+                  <div className="flex justify-between text-sm w-[150px]">
                     <button>
                       <Link to={`/?pasteId=${paste?._id}`}>
-                     {/* <Visiblity/> */}
+                     <CreateIcon/>
                       </Link>
                     </button>
                     <button>
                       <Link to={`/pastes/${paste?._id}`}>
-                      
-                        view
-                      
+                        <Visibility/>
                       </Link>
                     </button>
                     <button
@@ -69,12 +79,12 @@ const Paste = () => {
                           toast.error("Clipboard not supported");
                         }
                       }}>
-                      Copy
+                      <Copy/>
                     </button>
                     <button onClick={() => handleDelete(paste?._id)}>
-                      Delete
+                      <Delete/>
                     </button>
-                    <button>Share</button>
+                    <button onClick={handleShare} ><Share/></button>
                   </div>
                 </div>
               </div>

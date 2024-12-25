@@ -1,15 +1,17 @@
+
+
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
   return (
-    <div className='flex flex-row justify-around place-items-center gap-4 h-16 bg-gray-900 text-white text-center' >
+    <div className='flex flex-row justify-end place-items-center gap-4 h-16 bg-gray-900 text-white text-center' >
 
-     <div className='w-52 text-3xl '>
-     <h1 className='font-extrabold text-4xl ' >NOTES</h1>
+     <div className='w-[70%] text-3xl '>
+     <h1 className='font-extrabold text-4xl text-left ' >NOTES</h1>
      </div>
 
-      <div className='w-[100%] flex justify-around'>
+      <div className='w-[20%] flex justify-around  border-blue-100'>
       <NavLink to='/' >
             HOME
         </NavLink>
