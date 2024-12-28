@@ -1,28 +1,36 @@
-
-
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { Home, NoteAlt } from '@mui/icons-material';
 
 const Navbar = () => {
   return (
-    <div className='flex flex-row justify-end place-items-center gap-4 h-16 bg-gray-900 text-white text-center' >
-
-     <div className='w-[70%] text-3xl '>
-     <h1 className='font-extrabold text-4xl text-left ' >NOTES</h1>
-     </div>
-
-      <div className='w-[20%] flex justify-around  border-blue-100'>
-      <NavLink to='/' >
-            HOME
-        </NavLink>
-        <NavLink to='/pastes' >
-            NOTES
-        </NavLink>
-        
-
+    <nav className="bg-gray-900 text-white py-4 px-6 sticky top-0 z-10">
+      <div className="container mx-auto flex justify-between items-center">
+        <h1 className="text-2xl sm:text-3xl font-extrabold">NOTES</h1>
+        <div className="flex space-x-4">
+          <NavLink 
+            to="/" 
+            className={({ isActive }) => 
+              `${isActive ? 'text-blue-400' : 'text-white'} hover:text-gray-300 transition-colors flex items-center`
+            }
+          >
+            <Home className="sm:hidden" />
+            <span className="hidden sm:inline">HOME</span>
+          </NavLink>
+          <NavLink 
+            to="/pastes" 
+            className={({ isActive }) => 
+              `${isActive ? 'text-blue-400' : 'text-white'} hover:text-gray-300 transition-colors flex items-center`
+            }
+          >
+            <NoteAlt className="sm:hidden" />
+            <span className="hidden sm:inline">NOTES</span>
+          </NavLink>
+        </div>
       </div>
-    </div>
-  )
-}
+    </nav>
+  );
+};
 
-export default Navbar
+export default Navbar;
+

@@ -1,49 +1,46 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-
+import { ArrowBack, ContentCopy } from "@mui/icons-material";
 
 function ViewPaste() {
   const { id } = useParams();
   const allPastes = useSelector((state) => state.paste.pastes);
-  const paste = allPastes.filter((p) => p._id === id)[0];
+  const paste = allPastes.find((p) => p._id === id);
+
+  if (!paste) {
+    return <div className="text-center mt-8">Note not found</div>;
+  }
+
   return (
-    <div className="w-[44%] h-[80%]  rounded flex flex-col ml-[25%] mt-4">
-      <div className="flex flex-row gpa-7 place-content-between">
-        <input
-          className="p-1 rounded-2xl  mt-2 w-[65%] pl-5"
-          type="text"
-          placeholder="Enter title here"
-          value={paste.title}
-          disabled
-          onChange={(e) => settitle(e.target.value)}
-        />
-        <button className="p-2 rounded-2xl  mt-2 bg-slate-900 text-white">
-          <Link to={'/pastes'} >Back</Link>
-        </button>
-        
-      </div>
-      <div className="mt-8 ">
-       <div className="min-w-[600px]  bg-slate-300 -z-10 rounded-2xl ">
-        <div className="text-end pr-4" >
-          <button onClick={() => {
-                                        if (navigator.clipboard) {
-                                            navigator.clipboard.writeText(paste?.content || '');
-                                            toast.success('Copied to clipboard');
-                                        } else {
-                                            toast.error('Clipboard not supported');
-                                        }
-                                    }} >Copy</button></div>
-       <textarea
-          className="rounded-2xl min-w-[600px] p-4 mt-4 z-10 "
-          value={paste.content}
-          placeholder="Enter content here"
-          disabled
-          onChange={(e) => setvalue(e.target.value)}
-          rows={20}
-        />
-       </div>
+    <div className="container mx-auto mt-8 px-4">
+      <div className="max-w-3xl mx-auto bg-white shadow rounded-lg p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">{paste.title}</h1>
+          <Link to="/pastes" className="text-blue-600 hover:text-blue-800 flex items-center">
+            <ArrowBack className="mr-1" /> Back
+          </Link>
+        </div>
+        <div className="bg-gray-100 rounded-lg p-4 relative">
+          <button
+            onClick={() => {
+              if (navigator.clipboard) {
+                navigator.clipboard.writeText(paste?.content || "");
+                toast.success("Copied to clipboard", { position: "top-right" });
+              } else {
+                toast.error("Clipboard not supported", { position: "top-right" });
+              }
+            }}
+            className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+          >
+            <ContentCopy />
+          </button>
+          <pre className="whitespace-pre-wrap">{paste.content}</pre>
+        </div>
+        <p className="text-sm text-gray-500 mt-4">
+          Created: {new Date(paste.createdAt).toLocaleString()}
+        </p>
       </div>
     </div>
   );

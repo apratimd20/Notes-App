@@ -1,48 +1,37 @@
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './App.css';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Paste from './components/Paste';
+import ViewPaste from './components/ViewPaste';
 
-
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import './App.css'
-import Navbar from './components/Navbar'
-import Home from './components/Home'
-import Paste from './components/Paste'
-import ViewPaste from './components/ViewPaste'
+const Layout = ({ children }) => (
+  <>
+    <Navbar />
+    {children}
+  </>
+);
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: 
-    <div>
-      <Navbar/>
-      <Home/>
-    </div>
+    element: <Layout><Home /></Layout>,
   },
   {
     path: '/pastes',
-    element: 
-    <div>
-      <Navbar/>
-      <Paste/>
-    </div>
+    element: <Layout><Paste /></Layout>,
   },
   {
     path: '/pastes/:id',
-    element: 
-    <div>
-      <Navbar/>
-      <ViewPaste/>
-    </div>
+    element: <Layout><ViewPaste /></Layout>,
   },
-])
-
+]);
 
 function App() {
-
-
   return (
-    <>
-      <RouterProvider router={router} /> 
-    </>
-  )
+    <RouterProvider router={router} />
+  );
 }
 
-export default App
+export default App;

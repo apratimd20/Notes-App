@@ -4,25 +4,34 @@ import { useSearchParams } from "react-router-dom";
 import { addToPaste, updateToPaste } from "../redux/PasteSlice";
 
 function Home() {
-  const [title, settitle] = useState();
-  const [value, setvalue] = useState();
-  const [searchParams, setsearchParams] = useSearchParams();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
   const pasteId = searchParams.get("pasteId");
   const dispatch = useDispatch();
   const allPastes = useSelector((state) => state.paste.pastes);
+
   useEffect(() => {
     if (pasteId) {
       const paste = allPastes.find((p) => p._id === pasteId);
-      settitle(paste.title);
-      setvalue(paste.content);
+      if (paste) {
+        setTitle(paste.title);
+        setContent(paste.content);
+      }
     }
-  }, [pasteId]);
+  }, [pasteId, allPastes]);
+
   function createPaste() {
+    if (!title.trim() || !content.trim()) {
+      alert("Please enter both title and content");
+      return;
+    }
+
     const paste = {
-      title: title,
-      content: value,
+      title: title.trim(),
+      content: content.trim(),
       _id: pasteId || Date.now().toString(36),
-      createdAt: new Date().toDateString(),
+      createdAt: new Date().toISOString(),
     };
 
     if (pasteId) {
@@ -30,32 +39,34 @@ function Home() {
     } else {
       dispatch(addToPaste(paste));
     }
-    settitle("");
-    setvalue("");
-    setsearchParams({});
+    setTitle("");
+    setContent("");
+    setSearchParams({});
   }
+
   return (
-    <div className="w-[44%] h-[80%]  rounded flex flex-col ml-[25%] mt-4">
-      <div className="flex flex-row gpa-7 place-content-between">
-        <input
-          className="p-1 rounded-2xl  mt-2 w-[65%] pl-5"
-          type="text"
-          placeholder="Enter title here"
-          value={title}
-          required
-          onChange={(e) => settitle(e.target.value)}
-        />
-        <button onClick={createPaste} className="p-2 rounded-2xl  mt-2 bg-slate-900 text-white">
-          {pasteId ? "update My Notes" : "Create My Notes"}
-        </button>
-      </div>
-      <div className="mt-8">
+    <div className="container mx-auto mt-8 px-4">
+      <div className="max-w-2xl mx-auto">
+        <div className="mb-4 flex flex-col sm:flex-row sm:items-center gap-4">
+          <input
+            className="flex-grow p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="text"
+            placeholder="Enter title here"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <button 
+            onClick={createPaste} 
+            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
+          >
+            {pasteId ? "Update Note" : "Create Note"}
+          </button>
+        </div>
         <textarea
-          className="rounded-2xl min-w-[600px] p-4 mt-4 overflow-scroll bg-slate-200"
-          value={value}
+          className="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[300px]"
+          value={content}
           placeholder="Enter content here"
-          onChange={(e) => setvalue(e.target.value)}
-          rows={20}
+          onChange={(e) => setContent(e.target.value)}
         />
       </div>
     </div>
