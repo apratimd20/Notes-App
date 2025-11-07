@@ -47,7 +47,7 @@ function Register() {
         email: formData.email,
         password: formData.password
       });
-      console.log("Registration successful:", response.data);
+      // console.log("Registration successful:", response.data);
         if(response.status === 200 || response.status === 201){
           toast.success("Registration Successful");
         response.data.token && localStorage.setItem("token", response.data.token);
@@ -58,7 +58,7 @@ function Register() {
       console.error("Registration error:", error);
     }
 
-    console.log("Registration attempt:", formData);
+    // console.log("Registration attempt:", formData);
     
   };
 

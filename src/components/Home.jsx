@@ -31,7 +31,7 @@ function Home() {
       toast.error("Please enter both title and content");
       return;
     }
-    console.log("token check:", token);
+    // console.log("token check:", token);
 
      const note = {
       title: title.trim(),
