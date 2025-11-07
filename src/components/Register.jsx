@@ -95,7 +95,7 @@ function Register() {
           </h2>
           <p className="mt-2 text-sm text-gray-600">
             Already have an account?{' '}
-            <Link to="/login" className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">
+            <Link to="/login"  className="font-semibold text-blue-600 hover:text-blue-500 transition-colors cursor-pointer">
               Sign in here
             </Link>
           </p>

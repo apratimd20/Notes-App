@@ -76,7 +76,7 @@ function Home() {
       }
 
       if (response.status === 200 || response.status === 201) {
-        toast.success(pasteId ? "Note updated successfully!" : "Note created successfully!");
+        // toast.success(pasteId ? "Note updated successfully!" : "Note created successfully!");
         
         // Clear form and reset
         setTitle("");

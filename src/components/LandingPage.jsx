@@ -71,12 +71,12 @@ const LandingPage = () => {
                 Start Free Trial
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link
+              {/* <Link
                 to="/demo"
                 className="group border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg hover:border-blue-500 hover:text-blue-600 transition-all duration-300 transform hover:scale-105 backdrop-blur-sm"
               >
                 Watch Demo
-              </Link>
+              </Link> */}
             </div>
 
             {/* Trust Indicators */}
