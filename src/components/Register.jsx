@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { StickyNote, UserPlus, Home } from "lucide-react";
 import apiConfig from "../config/apiConfig";
 import axios from  "axios";
+import toast from "react-hot-toast";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -47,12 +48,18 @@ function Register() {
         password: formData.password
       });
       console.log("Registration successful:", response.data);
+        if(response.status === 200 || response.status === 201){
+          toast.success("Registration Successful");
+        response.data.token && localStorage.setItem("token", response.data.token);
+        response.data.user && localStorage.setItem("user", JSON.stringify(response.data.user));
+        navigate('/home');
+      }
     } catch (error) {
       console.error("Registration error:", error);
     }
 
     console.log("Registration attempt:", formData);
-    navigate('/');
+    
   };
 
   return (
@@ -105,7 +112,7 @@ function Register() {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  maxLength={20}
+                  maxLength={60}
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Enter your email"

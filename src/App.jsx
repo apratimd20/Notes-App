@@ -40,11 +40,11 @@ const router = createBrowserRouter([
     element: <AuthLayout><Register /></AuthLayout>,
   },
   {
-    path: '/pastes',
+    path: '/notes',
     element: <Layout><Paste /></Layout>,
   },
   {
-    path: '/pastes/:id',
+    path: '/notes/:id',
     element: <Layout><ViewPaste /></Layout>,
   },
 ]);

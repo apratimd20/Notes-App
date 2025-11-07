@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { addToPaste, updateToPaste } from "../redux/PasteSlice";
+import apiConfig from "../config/apiConfig";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 function Home() {
   const [title, setTitle] = useState("");
@@ -11,37 +14,59 @@ function Home() {
   const dispatch = useDispatch();
   const allPastes = useSelector((state) => state.paste.pastes);
 
-  useEffect(() => {
-    if (pasteId) {
-      const paste = allPastes.find((p) => p._id === pasteId);
-      if (paste) {
-        setTitle(paste.title);
-        setContent(paste.content);
-      }
-    }
-  }, [pasteId, allPastes]);
+  // useEffect(() => {
+  //   if (pasteId) {
+  //     const paste = allPastes.find((p) => p._id === pasteId);
+  //     if (paste) {
+  //       setTitle(paste.title);
+  //       setContent(paste.content);
+  //     }
+  //   }
+  // }, [pasteId, allPastes]);
 
-  function createPaste() {
+  const token = localStorage.getItem("token");
+
+ async function createPaste() {
     if (!title.trim() || !content.trim()) {
-      alert("Please enter both title and content");
+      toast.error("Please enter both title and content");
       return;
     }
+    console.log("token check:", token);
 
-    const paste = {
+     const note = {
       title: title.trim(),
       content: content.trim(),
-      _id: pasteId || Date.now().toString(36),
-      createdAt: new Date().toISOString(),
+      // _id: pasteId || Date.now().toString(36),
+      // createdAt: new Date().toISOString(),
     };
 
-    if (pasteId) {
-      dispatch(updateToPaste(paste));
-    } else {
-      dispatch(addToPaste(paste));
+    try{
+      const response = await axios.post(apiConfig.notes, note,{
+       
+        headers:{
+          Authorization : `Bearer ${token}`,
+          'Content-Type' : 'application/json'
+        }
+      })
+
+      if(response.status === 200 || response.status === 201){
+        toast.success("Note created successfully");
+        console.log("Note created successfully:", response.data);
+      }
     }
+    catch(error){
+      console.log(error);
+      console.error("Error creating note:", error);
+    }
+
+    // if (pasteId) {
+    //   dispatch(updateToPaste(paste));
+    // } else {
+    //   dispatch(addToPaste(paste));
+    // }
     setTitle("");
     setContent("");
-    setSearchParams({});
+    // setSearchParams({});
   }
 
   return (

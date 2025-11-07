@@ -23,7 +23,7 @@ const Paste = () => {
   function handleShare(pasteId) {
     navigator.share({
       title: "See this note",
-      url: `${window.location.origin}/pastes/${pasteId}`
+      url: `${window.location.origin}/notes/${pasteId}`
     }).catch(error => console.log('Error sharing', error));
   }
 
@@ -55,7 +55,7 @@ const Paste = () => {
                   <Link to={`/?pasteId=${paste?._id}`} className="text-blue-600 hover:text-blue-800 transition-colors">
                     <Create />
                   </Link>
-                  <Link to={`/pastes/${paste?._id}`} className="text-green-600 hover:text-green-800 transition-colors">
+                  <Link to={`/notes/${paste?._id}`} className="text-green-600 hover:text-green-800 transition-colors">
                     <Visibility />
                   </Link>
                   <button

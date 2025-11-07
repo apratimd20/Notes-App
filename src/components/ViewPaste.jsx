@@ -18,7 +18,7 @@ function ViewPaste() {
       <div className="max-w-3xl mx-auto bg-white shadow rounded-lg p-6">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">{paste.title}</h1>
-          <Link to="/pastes" className="text-blue-600 hover:text-blue-800 flex items-center">
+          <Link to="/notes" className="text-blue-600 hover:text-blue-800 flex items-center">
             <ArrowBack className="mr-1" /> Back
           </Link>
         </div>
@@ -34,7 +34,7 @@ function ViewPaste() {
             }}
             className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
           >
-            <ContentCopy />
+            <ContentCopy/>
           </button>
           <pre className="whitespace-pre-wrap">{paste.content}</pre>
         </div>
